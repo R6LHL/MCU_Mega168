@@ -6,7 +6,7 @@
 // Atmega168 MicroController Unit 
 namespace MCU_Mega168
 {
-	
+	//Input/output ports
 	namespace IO_
 	{
 		// IO port B		
@@ -41,7 +41,16 @@ namespace MCU_Mega168
 		struct DIDR1_ : public RegisterBase<0x7f, 8, ReadWriteMode> {};
 		// end Digital input disable register 1
 		
-	} // end IO
+	} // end Input/output ports
+	
+	//MCU core control registers
+	namespace Core_
+	{
+		// Status register
+		struct SREG_ : public RegisterBase<0x5f, 8, ReadWriteMode>
+		
+		
+	}// end MCU core control registers
 	
 	namespace TC_ //Timer_counters
 	{
@@ -299,7 +308,7 @@ namespace MCU_Mega168
 	namespace Self_programming_
 	{
 		//Store program memory control and status register
-		struct SPMCSR_ : public RegisterBase<0x57, 8,  ReadWriteModeMode> {};
+		struct SPMCSR_ : public RegisterBase<0x57, 8,  ReadWriteMode> {};
 		//end Store program memory control and status register
 		
 	} //end Self_programming
