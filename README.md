@@ -1,2 +1,5 @@
 # MCU_Mega168
-interface class for MCU ATMega168
+Интерфейсный класс для микроконтроллера AVR8 Mega168.
+
+Идея позаимствована отсюда: https://habr.com/ru/post/459642/
+
