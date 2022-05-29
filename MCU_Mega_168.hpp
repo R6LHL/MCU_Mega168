@@ -77,9 +77,10 @@ namespace MCU_Mega168
 		//Power reduction register
 		struct PRR_ : public RegisterBase<0x64> {};
 		// end Power reduction register
-		
-		inline static void cli(void) {asm volatile ("cli");}
-		inline static void sei(void) {asm volatile ("sei");}
+		/*
+		inline void cli(void) {asm volatile ("cli");}
+		inline void sei(void) {asm volatile ("sei");}
+		*/
 		
 	}// end MCU core control registers
 	
@@ -219,84 +220,13 @@ namespace MCU_Mega168
 		}//end  Timer-counter 1 16bit
 		
 		namespace TC2_ // Timer-counter 2 8bit
-		{
+		{	
 			//TC2_ control register A
 			struct TCCR2A_ : public RegisterBase<0xb0> {};
 			// end TC2_ control register A
 			
 			//TC2_ control register B
-			struct TCCR2B_ : public RegisterBase<0xb1> 
-			{
-				/*
-				Bit 7 – FOC2A: Force Output Compare A
-				Bit 6 – FOC2B: Force Output Compare B
-				Bit 3 – WGM22: Waveform Generation Mode
-				Bits 2:0 – CS2[2:0]: Clock Select 2 [n = 0..2]
-				*/
-				
-				static void TimerStop(void)
-				{
-					uint8_t byte_ = Get();
-					byte_ &= ~((1<<2)|(1<<1)|(1<<0);
-					Set(byte_);
-				}
-				
-				static void SetPrescaler1(void)
-				{
-					uint8_t byte_ = Get();
-					byte_ &= ~((1<<2));
-					byte_ |= (1<<0);
-					Set(byte_);
-				}
-				
-				static void SetPrescaler8(void)
-				{
-					uint8_t byte_ = Get();
-					byte_ &= ~((1<<2)|(1<<0));
-					byte_ |= (1<<1);
-					Set(byte_);
-				}
-				
-				static void SetPrescaler32(void)
-				{
-					uint8_t byte_ = Get();
-					byte_ &= ~(1<<2);
-					byte_ |= ((1<<1)|(1<<0));
-					Set(byte_);
-				}
-				
-				static void SetPrescaler64(void)
-				{			
-					uint8_t byte_ = Get();
-					byte_ &= ~((1<<1)|(1<<0));
-					byte_ |= (1<<2);
-					Set(byte_);
-				}
-				
-				static void SetPrescaler128(void)
-				{
-					uint8_t byte_ = Get();
-					byte_ &= ~(1<<1);
-					byte_ |= ((1<<2)|(1<<0));
-					Set(byte_);
-				}
-				
-				static void SetPrescaler256(void)
-				{
-					uint8_t byte_ = Get();
-					byte_ &= ~(1<<0);
-					byte_ |= ((1<<2)|(1<<1));
-					Set(byte_);
-				}
-				
-				static void SetPrescaler1024(void)
-				{
-					uint8_t byte_ = Get();
-					byte_ |= ((1<<2)|(1<<1)|(1<<0));
-					Set(byte_);
-				}
-				
-			};
+			struct TCCR2B_ : public RegisterBase<0xb1> {};
 			// end TC2_ control register B
 			
 			//TC2_ counter value register
@@ -314,7 +244,7 @@ namespace MCU_Mega168
 			//TC2_ iterrupt mask register
 			struct TIMSK2_ : public RegisterBase<0x70> {};
 			// end TC2_ iterrupt mask register
-			
+						
 			//TC2_ iterrupt flag register
 			struct TIFR2_ : public RegisterBase<0x37> {};
 			// end TC2_ iterrupt flag register
@@ -322,6 +252,73 @@ namespace MCU_Mega168
 			//Asynchronous status register
 			struct ASSR_ : public RegisterBase<0xb6> {};
 			//end Asynchronous status register
+			
+			static void TimerStop(void)
+			{
+				uint8_t byte_ = TCCR2B_ ::Get();
+				byte_ &= ~((1<<2)|(1<<1)|(1<<0);
+				TCCR2B_ ::Set(byte_);
+			}
+				
+			static void SetPrescaler1(void)
+			{
+				uint8_t byte_ = TCCR2B_ ::Get();
+				byte_ &= ~((1<<2));
+				byte_ |= (1<<0);
+				TCCR2B_ ::Set(byte_);
+			}
+				
+			static void SetPrescaler8(void)
+			{
+				uint8_t byte_ = TCCR2B_ ::Get();
+				byte_ &= ~((1<<2)|(1<<0));
+				byte_ |= (1<<1);
+				TCCR2B_ ::Set(byte_);
+			}
+				
+			static void SetPrescaler32(void)
+			{
+				uint8_t byte_ = TCCR2B_ ::Get();
+				byte_ &= ~(1<<2);
+				byte_ |= ((1<<1)|(1<<0));
+				TCCR2B_ ::Set(byte_);
+			}
+				
+			static void SetPrescaler64(void)
+			{			
+				uint8_t byte_ = TCCR2B_ ::Get();
+				byte_ &= ~((1<<1)|(1<<0));
+				byte_ |= (1<<2);
+				TCCR2B_ ::Set(byte_);
+			}
+				
+			static void SetPrescaler128(void)
+			{
+				uint8_t byte_ = TCCR2B_ ::Get();
+				byte_ &= ~(1<<1);
+				byte_ |= ((1<<2)|(1<<0));
+				TCCR2B_ ::Set(byte_);
+			}
+			
+			static void SetPrescaler256(void)
+			{
+				uint8_t byte_ = TCCR2B_ ::Get();
+				byte_ &= ~(1<<0);
+				byte_ |= ((1<<2)|(1<<1));
+				TCCR2B_ ::Set(byte_);
+			}
+			
+			static void SetPrescaler1024(void)
+			{
+				uint8_t byte_ = TCCR2B_ ::Get();
+				byte_ |= ((1<<2)|(1<<1)|(1<<0));
+				TCCR2B_ ::Set(byte_);
+			}
+			
+			//Overflow interrupt enable
+			void Ovf_Int_Enable(void){TIMSK2_::SetBit(0);}
+			//Overflow interrupt disable
+			void Ovf_Int_Disable(void){TIMSK2_::ClearBit(0);}
 			
 		}// end Timer-counter 2 8bit
 	}//end Timer_counters
@@ -473,6 +470,6 @@ namespace MCU_Mega168
 		
 	} //end Self_programming
 	
-};// Atmega168 MicroController Unit 
+}// Atmega168 MicroController Unit 
 
 #endif //_MCU_Mega168_HPP
