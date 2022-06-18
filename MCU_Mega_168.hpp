@@ -5,10 +5,10 @@
 #include "IO_port_basic.hpp"
 
 // Atmega168 MicroController Unit 
-namespace MCU_Mega168
+namespace MCU
 {
 		
-	namespace IO_
+	namespace IO
 	{
 		struct PORTB_ : public IO_port_basic<0x23, 0x24, 0x25> {};
 		struct PORTC_ : public IO_port_basic<0x26, 0x27, 0x28> {};
@@ -36,7 +36,7 @@ namespace MCU_Mega168
 		
 	} // end IO
 	
-	namespace Core_
+	namespace Core
 	{
 		// Status register
 		struct SREG_ : public RegisterBase<0x5f> {};
@@ -76,6 +76,119 @@ namespace MCU_Mega168
 		
 		//Power reduction register
 		struct PRR_ : public RegisterBase<0x64> {};
+		
+		//ADC power management
+		static void ADC_powerUp(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ &= ~(1<<0);
+				TCCR2B_ ::Set(byte_);
+			}
+			
+		static void ADC_powerDown(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ |= (1<<0);
+				TCCR2B_ ::Set(byte_);
+			}
+		//end ADC power management
+		
+		//USART0 power management
+		static void USART0_powerUp(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ &= ~(1<<1);
+				TCCR2B_ ::Set(byte_);
+			}
+			
+		static void USART0_powerDown(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ |= (1<<1);
+				TCCR2B_ ::Set(byte_);
+			}
+		//end USART0 power management
+		
+		//SPI power management
+		static void SPI_powerUp(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ &= ~(1<<2);
+				TCCR2B_ ::Set(byte_);
+			}
+			
+		static void SPI_powerDown(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ |= (1<<2);
+				TCCR2B_ ::Set(byte_);
+			}
+		//end SPI power management
+		
+		//Timer1 power management
+		static void TC1_powerUp(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ &= ~(1<<3);
+				TCCR2B_ ::Set(byte_);
+			}
+			
+		static void TC1_powerDown(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ |= (1<<3);
+				TCCR2B_ ::Set(byte_);
+			}
+		//end Timer1 power management
+		
+		//Timer0 power management
+		static void TC0_powerUp(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ &= ~(1<<5);
+				TCCR2B_ ::Set(byte_);
+			}
+			
+		static void TC0_powerDown(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ |= (1<<5);
+				TCCR2B_ ::Set(byte_);
+			}
+		//end Timer0 power management
+		
+		//Timer2 power management
+		static void TC2_powerUp(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ &= ~(1<<6);
+				TCCR2B_ ::Set(byte_);
+			}
+			
+		static void TC2_powerDown(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ |= (1<<6);
+				TCCR2B_ ::Set(byte_);
+			}
+		//end Timer2 power management
+		
+		//TWI power management
+		static void TWI_powerUp(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ &= ~(1<<7);
+				TCCR2B_ ::Set(byte_);
+			}
+			
+		static void TWI_powerDown(void)
+			{
+				uint8_t byte_ = PRR_ ::Get();
+				byte_ |= (1<<7);
+				TCCR2B_ ::Set(byte_);
+			}
+		//end TWI power management
+			
 		// end Power reduction register
 		/*
 		inline void cli(void) {asm volatile ("cli");}
@@ -84,7 +197,7 @@ namespace MCU_Mega168
 		
 	}// end MCU core control registers
 	
-	namespace EXINT_ //external interrupts
+	namespace EXINT //external interrupts
 	{
 		//External interrupt control register A
 		struct EICRA_ : public RegisterBase<0x69> {};
@@ -120,14 +233,14 @@ namespace MCU_Mega168
 		
 	}// end external interrupts
 	
-	namespace TC_ //Timer_counters
+	namespace TC //Timer_counters
 	{
 	
 		//General TC control register
 		struct GTCCR_ : public RegisterBase<0x43>	{};
 		//end General TC control register
 		
-		namespace TC0_ // Timer-counter 0 8bit
+		namespace TC0 // Timer-counter 0 8bit
 		{
 			//TC0_ flag register
 			struct TIFR0_ : public RegisterBase<0x35> {};
@@ -159,7 +272,7 @@ namespace MCU_Mega168
 						
 		} //end Timer-counter 0
 		
-		namespace TC1_ // Timer-counter 1 16bit
+		namespace TC1 // Timer-counter 1 16bit
 		{
 			//TC1_ control register A
 			struct TCCR1A_ : public RegisterBase<0x80> {}; 
@@ -219,7 +332,7 @@ namespace MCU_Mega168
 					
 		}//end  Timer-counter 1 16bit
 		
-		namespace TC2_ // Timer-counter 2 8bit
+		namespace TC2 // Timer-counter 2 8bit
 		{	
 			//TC2_ control register A
 			struct TCCR2A_ : public RegisterBase<0xb0> {};
@@ -325,7 +438,7 @@ namespace MCU_Mega168
 	
 	
 	//Serial-peripherial interface
-	namespace SPI_
+	namespace SPI
 	{
 		//SPI_ control register 0
 		struct SPCR0_ : public RegisterBase<0x4c> {};
@@ -342,7 +455,7 @@ namespace MCU_Mega168
 	}// end Serial-peripherial interface
 	
 	//Universal synchronous/asynchronous receiver/transmitter
-	namespace USART_
+	namespace USART
 	{
 		//USART0 data register
 		struct UDR0_ : public RegisterBase<0xc6> {};
@@ -371,7 +484,7 @@ namespace MCU_Mega168
 	}// end Universal synchronous/asynchronous receiver/transmitter
 	
 	// Two-wire interface
-	namespace TWI_
+	namespace TWI
 	{
 		//TWI Bit rate register
 		struct TWBR_ : public RegisterBase<0xb8> {};
@@ -400,7 +513,7 @@ namespace MCU_Mega168
 	}// end Two-wire interface
 	
 	//Analog comparator
-	namespace AC_
+	namespace AC
 	{
 		/*
 		//ADC control and status register B
@@ -415,7 +528,7 @@ namespace MCU_Mega168
 	}// end Analog comparator
 	
 	//Analog to digital converter
-	namespace ADC_
+	namespace ADC
 	{
 		//ADC multiplexer selection register
 		struct ADMUX_ : public RegisterBase<0x7c> {};
@@ -440,7 +553,7 @@ namespace MCU_Mega168
 	}// end Analog to digital converter
 	
 	//EEPROM
-	namespace EEPROM_
+	namespace EEPROM
 	{
 		// EEPROM address register high
 		struct EEARH_ : public RegisterBase<0x42e> {};
@@ -462,7 +575,7 @@ namespace MCU_Mega168
 
 	
 	//Self_programming
-	namespace Self_programming_
+	namespace Self_programming
 	{
 		//Store program memory control and status register
 		struct SPMCSR_ : public RegisterBase<0x57> {};
