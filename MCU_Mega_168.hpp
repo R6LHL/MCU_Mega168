@@ -72,6 +72,37 @@ namespace MCU
 		
 		//Watchdog timer control register
 		struct WDTCSR_ : public RegisterBase<0x60> {};
+		
+		bool is_WDT_I_Flag_Set()
+		{
+			if (WDTCSR_::GetBit(7) == 0) return false;
+			else return true;
+		}
+		
+		void set_WDT_I_Flag(){WDTCSR_::SetBit(7);}
+		void clear_WDT_I_Flag(){WDTCSR_::SetBit(7);}
+		
+		void WDT_Interrupt_Enable()
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ |= (1<<6);
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		void WDT_Interrupt_Disable()
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~(1<<6);
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		bool is_WDT_Interrupt_Enabled()
+		{
+			if (WDTCSR_::GetBit(6) == 0) return false;
+			else return true;
+		}
+		
+						
 		// end Watchdog timer control register
 		
 		//Power reduction register
@@ -369,7 +400,7 @@ namespace MCU
 			static void TimerStop(void)
 			{
 				uint8_t byte_ = TCCR2B_ ::Get();
-				byte_ &= ~((1<<2)|(1<<1)|(1<<0);
+				byte_ &= ~((1<<2)|(1<<1)|(1<<0));
 				TCCR2B_ ::Set(byte_);
 			}
 				
