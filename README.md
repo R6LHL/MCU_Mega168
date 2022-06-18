@@ -34,5 +34,15 @@ MCU::Core::TC2_powerDown();
 //TWI power management
 MCU::Core::TWI_powerUp();
 MCU::Core::TWI_powerDown();
+
+### Добавлены функции для работы с WatchDog timer
+
+bool is_WDT_I_Flag_Set();         //Is WatchDog timer interrupt flag set?
+void set_WDT_I_Flag();            //Set WatchDog timer interrupt flag
+void clear_WDT_I_Flag();          //Clear WatchDog timer interrupt flag
+void WDT_Interrupt_Enable();      //Enable WatchDog timer interrupt
+void WDT_Interrupt_Disable();     //Disable WatchDog timer interrupt
+bool is_WDT_Interrupt_Enabled();  //Is WatchDog timer interrupt enabled?
+
 ```
 
