@@ -15,13 +15,13 @@ struct IO_port_basic
 	static void pullupAll(void)
 	{
 		DDR_::Set(0x00);
-    PORT_::Set(0xff);
+    		PORT_::Set(0xff);
 	}
 			
 	static void Hi_Z_All(void)
 	{
 		DDR_::Set(0x00);
-    PORT_::Set(0x00);
+    		PORT_::Set(0x00);
 	}
 };
 
