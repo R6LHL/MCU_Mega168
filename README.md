@@ -6,7 +6,7 @@
 
 ### 18.06.22 Добавлена функция включения/выключения ADC в регистре PRR
 ```C++
-MCU::Core::ADC_turnOn();
-MCU::Core::ADC_turnOff();
+MCU::Core::ADC_powerUp();
+MCU::Core::ADC_powerDown();
 ```
 
