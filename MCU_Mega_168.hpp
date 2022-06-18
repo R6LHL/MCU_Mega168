@@ -82,14 +82,14 @@ namespace MCU
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ &= ~(1<<0);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 			
 		static void ADC_powerDown(void)
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ |= (1<<0);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 		//end ADC power management
 		
@@ -98,14 +98,14 @@ namespace MCU
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ &= ~(1<<1);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 			
 		static void USART0_powerDown(void)
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ |= (1<<1);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 		//end USART0 power management
 		
@@ -114,14 +114,14 @@ namespace MCU
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ &= ~(1<<2);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 			
 		static void SPI_powerDown(void)
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ |= (1<<2);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 		//end SPI power management
 		
@@ -130,14 +130,14 @@ namespace MCU
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ &= ~(1<<3);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 			
 		static void TC1_powerDown(void)
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ |= (1<<3);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 		//end Timer1 power management
 		
@@ -146,14 +146,14 @@ namespace MCU
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ &= ~(1<<5);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 			
 		static void TC0_powerDown(void)
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ |= (1<<5);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 		//end Timer0 power management
 		
@@ -162,14 +162,14 @@ namespace MCU
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ &= ~(1<<6);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 			
 		static void TC2_powerDown(void)
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ |= (1<<6);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 		//end Timer2 power management
 		
@@ -178,14 +178,14 @@ namespace MCU
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ &= ~(1<<7);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 			
 		static void TWI_powerDown(void)
 			{
 				uint8_t byte_ = PRR_ ::Get();
 				byte_ |= (1<<7);
-				TCCR2B_ ::Set(byte_);
+				PRR_ ::Set(byte_);
 			}
 		//end TWI power management
 			
