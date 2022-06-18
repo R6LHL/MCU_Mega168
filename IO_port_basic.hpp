@@ -12,18 +12,18 @@ struct IO_port_basic
 		
 	struct PORT_ : public RegisterBase<T_PORT> {};
 			
-	void pullupAll(void)
+	static void pullupAll(void)
 	{
-		DDR_::ClearAll();
-		PORT_::SetAll();
+		DDR_::Set(0x00);
+    PORT_::Set(0xff);
 	}
 			
-	void Hi_Z_All(void)
+	static void Hi_Z_All(void)
 	{
-		DDR_::ClearAll();
-		PORT_::ClearAll();
+		DDR_::Set(0x00);
+    PORT_::Set(0x00);
 	}
-}
+};
 
 
 #endif// _IO_PORT_BASIC
