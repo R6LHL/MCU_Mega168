@@ -8,7 +8,7 @@
 namespace MCU
 {
 		
-	namespace IO
+	namespace IO_
 	{
 		struct PORTB_ : public IO_port_basic<0x23, 0x24, 0x25> {};
 		struct PORTC_ : public IO_port_basic<0x26, 0x27, 0x28> {};
@@ -197,7 +197,7 @@ namespace MCU
 		
 	}// end MCU core control registers
 	
-	namespace EXINT //external interrupts
+	namespace EXINT_ //external interrupts
 	{
 		//External interrupt control register A
 		struct EICRA_ : public RegisterBase<0x69> {};
@@ -240,7 +240,7 @@ namespace MCU
 		struct GTCCR_ : public RegisterBase<0x43>	{};
 		//end General TC control register
 		
-		namespace TC0 // Timer-counter 0 8bit
+		namespace TC0_ // Timer-counter 0 8bit
 		{
 			//TC0_ flag register
 			struct TIFR0_ : public RegisterBase<0x35> {};
@@ -272,7 +272,7 @@ namespace MCU
 						
 		} //end Timer-counter 0
 		
-		namespace TC1 // Timer-counter 1 16bit
+		namespace TC1_ // Timer-counter 1 16bit
 		{
 			//TC1_ control register A
 			struct TCCR1A_ : public RegisterBase<0x80> {}; 
@@ -332,7 +332,7 @@ namespace MCU
 					
 		}//end  Timer-counter 1 16bit
 		
-		namespace TC2 // Timer-counter 2 8bit
+		namespace TC2_ // Timer-counter 2 8bit
 		{	
 			//TC2_ control register A
 			struct TCCR2A_ : public RegisterBase<0xb0> {};
@@ -438,7 +438,7 @@ namespace MCU
 	
 	
 	//Serial-peripherial interface
-	namespace SPI
+	namespace SPI_
 	{
 		//SPI_ control register 0
 		struct SPCR0_ : public RegisterBase<0x4c> {};
@@ -455,7 +455,7 @@ namespace MCU
 	}// end Serial-peripherial interface
 	
 	//Universal synchronous/asynchronous receiver/transmitter
-	namespace USART
+	namespace USART_
 	{
 		//USART0 data register
 		struct UDR0_ : public RegisterBase<0xc6> {};
@@ -484,7 +484,7 @@ namespace MCU
 	}// end Universal synchronous/asynchronous receiver/transmitter
 	
 	// Two-wire interface
-	namespace TWI
+	namespace TWI_
 	{
 		//TWI Bit rate register
 		struct TWBR_ : public RegisterBase<0xb8> {};
@@ -513,7 +513,7 @@ namespace MCU
 	}// end Two-wire interface
 	
 	//Analog comparator
-	namespace AC
+	namespace AC_
 	{
 		/*
 		//ADC control and status register B
@@ -528,7 +528,7 @@ namespace MCU
 	}// end Analog comparator
 	
 	//Analog to digital converter
-	namespace ADC
+	namespace ADC_
 	{
 		//ADC multiplexer selection register
 		struct ADMUX_ : public RegisterBase<0x7c> {};
@@ -553,7 +553,7 @@ namespace MCU
 	}// end Analog to digital converter
 	
 	//EEPROM
-	namespace EEPROM
+	namespace EEPROM_
 	{
 		// EEPROM address register high
 		struct EEARH_ : public RegisterBase<0x42e> {};
