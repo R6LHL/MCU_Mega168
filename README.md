@@ -8,32 +8,32 @@
 ### 18.06.22 Добавлены функции управления питанием в регистре PRR
 ```C++
 //ADC power management
-MCU::Core::ADC_powerUp();
-MCU::Core::ADC_powerDown();
+void MCU::Core::ADC_powerUp(void);
+void MCU::Core::ADC_powerDown(void);
 
 //USART0 power management
-MCU::Core::USART0_powerUp();
-MCU::Core::USART0_powerDown();
+void MCU::Core::USART0_powerUp(void);
+void MCU::Core::USART0_powerDown(void);
 
 //SPI power management
-MCU::Core::SPI_powerUp();
-MCU::Core::SPI_powerDown();
+void MCU::Core::SPI_powerUp(void);
+void MCU::Core::SPI_powerDown(void);
 
 //Timer1 power management
-MCU::Core::TC1_powerUp();
-MCU::Core::TC1_powerDown();
+void MCU::Core::TC1_powerUp(void);
+void MCU::Core::TC1_powerDown(void);
 
 //Timer0 power management
-MCU::Core::TC0_powerUp();
-MCU::Core::TC0_powerDown();
+void MCU::Core::TC0_powerUp(void);
+void MCU::Core::TC0_powerDown(void);
 
 //Timer2 power management
-MCU::Core::TC2_powerUp();
-MCU::Core::TC2_powerDown();
+void MCU::Core::TC2_powerUp(void);
+void MCU::Core::TC2_powerDown(void);
 
 //TWI power management
-MCU::Core::TWI_powerUp();
-MCU::Core::TWI_powerDown();
+void MCU::Core::TWI_powerUp(void);
+void MCU::Core::TWI_powerDown(void);
 
 ### Добавлены функции для работы с WatchDog timer
 
