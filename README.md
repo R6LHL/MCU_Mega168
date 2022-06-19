@@ -16,7 +16,103 @@ void ClearBit(uint8_t bit_number);  //clear specified bit
 void pullupAll(void); //set all port pins with pullup
 void Hi_Z_All(void);  //set all port pins with Hi-Z impendance
 ```
+## Для работы с регистрами GPIOR0...2 используйте функции из RegisterBase.hpp: все регистры наследуют их.
+### Например
+```C++
+MCU::IO_::GPIOR0_::Set(0xfa);
+```
+## Для работы с портами ВВ PORTB...D используйте функции из RegisterBase.hpp и IO_port_basic.hpp: все регистры ВВ наследуют их.
+### Например
+```C++
+MCU::IO_::PORTB_::SetBit(3);
+MCU::IO_::PORTD_::pullupAll();
+```
 ## Объявления функций в файле MCU_Mega_168.hpp
+### namespace MCU
+#### namepace MCU::IO_
+```C++
+struct PORTB_ : public IO_port_basic;
+struct PORTC_ : public IO_port_basic;
+struct PORTD_ : public IO_port_basic;
+
+struct GPIOR0_ : public RegisterBase;
+struct GPIOR1_ : public RegisterBase;
+struct GPIOR2_ : public RegisterBase;
+```
+#### namepace MCU::Sleep_
+```C++
+void MCU::Sleep_::Enable(void);    // разрешает переход контроллера в спящий режим по команде sleep
+void MCU::Sleep_::Disable(void);   // запрещает переход контроллера в спящий режим по команде sleep
+void MCU::Sleep_::Go(void);        // переход в спячку
+```
+##### namepace MCU::Sleep_::Mode
+```C++
+void MCU::Sleep_::Mode::Idle(void);
+void MCU::Sleep_::Mode::ADC_NoiseReduction(void);
+void MCU::Sleep_::Mode::PowerDown(void);
+void MCU::Sleep_::Mode::PowerSave(void);
+void MCU::Sleep_::Mode::Standby(void);
+void MCU::Sleep_::Mode::ExtendedStandby(void);
+```
+#### namespace MCU::Core
+```C++
+struct SREG_ : public RegisterBase;
+struct SPL_ : public RegisterBase;
+struct SPH_ : public RegisterBase;
+struct MCUCR_ : public RegisterBase;
+
+// MCU status register - indicates which event is reset occured
+// 0x01 - if power-on
+// 0x02 - if external reset
+// 0x04 - if brown-out reset
+// 0x08 - if watchdog reset
+struct MCUSR_ : public RegisterBase;
+			
+// Oscillator calibration register
+struct OSCCAL_ : public RegisterBase;
+	
+//Clock Precaler register
+struct CLKPR_ : public RegisterBase;
+
+//Power reduction register
+struct PRR_ : public RegisterBase;
+```
+#### namespace MCU::Watchdog
+```C++
+bool MCU::Watchdog::is_I_Flag_Set(void);
+void MCU::Watchdog::set_I_Flag(void);
+void MCU::Watchdog::clear_I_Flag(void);
+void MCU::Watchdog::Interrupt_Enable(void);
+bool MCU::Watchdog::is_InterruptEnabled(void);
+void MCU::Watchdog::Change_Disable(void);
+void MCU::Watchdog::Change_Enable(void);
+void MCU::Watchdog::System_reset_enable(void);
+void MCU::Watchdog::System_reset_disable(void);
+```
+##### namespace MCU::Watchdog::Prescaler
+```C++
+void MCU::Watchdog::Prescaler::set_2048(void);
+void MCU::Watchdog::Prescaler::set_4096(void);
+void MCU::Watchdog::Prescaler::set_8192(void);
+void MCU::Watchdog::Prescaler::set_16348(void);
+void MCU::Watchdog::Prescaler::set_32768(void);
+void MCU::Watchdog::Prescaler::set_65536(void);
+void MCU::Watchdog::Prescaler::set_131072(void);
+void MCU::Watchdog::Prescaler::set_262144(void);
+void MCU::Watchdog::Prescaler::set_524288(void);
+void MCU::Watchdog::Prescaler::set_1048576(void);
+```
+##### namespace MCU::Watchdog::Mode
+```C++
+void MCU::Watchdog::Mode::stop(void);
+void MCU::Watchdog::Mode::interrupt(void);
+void MCU::Watchdog::Mode::SystemReset(void);
+void MCU::Watchdog::Mode::Interrupt_And_SystemReset(void);
+```
+#### namespace 
+
+## ******************************************************
+_________________________________________________
 ### 3.06.22 Добавлены функции управления таймером2
 ```C++
 //TC2 prescaler setup functions
@@ -32,9 +128,7 @@ void MCU::TC::TC2_::SetPrescaler1024(void);
 //TC2 interrupt setup functions
 void MCU::TC::TC2_::Ovf_Int_Enable(void);
 void MCU::TC::TC2_::Ovf_Int_Disable(void);
-
 ```
-
 ### 18.06.22 Добавлены функции управления питанием в регистре PRR
 ```C++
 //ADC power management
@@ -113,17 +207,6 @@ void MCU::IO_::ADC_digital_Input_Enable(uint8_t adc_pin_number);
 ```C++
 void MCU::IO_::AC_digital_Input_Enable(uint8_t ac_pin_number);
 void MCU::IO_::AC_digital_Input_Disable(uint8_t ac_pin_number);
-```
-### Для работы с регистрами GPIOR0...2 используйте функции из RegisterBase.hpp: все регистры наследуют их.
-#### Например
-```C++
-MCU::IO_::GPIOR0_::Set(0xfa);
-```
-### Для работы с портами ВВ PORTB...D используйте функции из RegisterBase.hpp и IO_port_basic.hpp: все регистры ВВ наследуют их.
-#### Например
-```C++
-MCU::IO_::PORTB_::SetBit(3);
-MCU::IO_::PORTD_::pullupAll();
 ```
 ### Добавлены функции для работы с режимами спячки
 #### Установка режимов спячки
