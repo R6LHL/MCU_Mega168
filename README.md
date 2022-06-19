@@ -125,3 +125,18 @@ MCU::IO_::GPIOR0_::Set(0xfa);
 MCU::IO_::PORTB_::SetBit(3);
 MCU::IO_::PORTD_::pullupAll();
 ```
+### Добавлены функции для работы с режимами спячки
+#### Установка режимов спячки
+```C++
+void MCU::Core::sleepMode_Idle(void);
+void MCU::Core::sleepMode_ADC_NoiseReduction(void);
+void MCU::Core::sleepMode_PowerDown(void);
+void MCU::Core::sleepMode_PowerSave(void);
+void MCU::Core::sleepMode_Standby(void);
+void MCU::Core::sleepMode_ExtendedStandby(void);
+```
+#### Разрешение/запрещение спячки
+```C++
+void MCU::Core::sleepEnable(void); // разрешает переход контроллера в спящий режим по команде sleep
+void MCU::Core::sleepDisable(void); // запрещает переход контроллера в спящий режим по команде sleep
+```
