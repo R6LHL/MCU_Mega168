@@ -35,7 +35,7 @@ void MCU::Core::TC2_powerDown(void);
 void MCU::Core::TWI_powerUp(void);
 void MCU::Core::TWI_powerDown(void);
 ```
-###19.06.22 Добавлены функции для работы с WatchDog timer
+### 19.06.22 Добавлены функции для работы с WatchDog timer
 ```C++
 //WDT interrupt flag functions
 bool is_WDT_I_Flag_Set();         //Is WatchDog timer interrupt flag set?
