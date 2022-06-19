@@ -4,6 +4,23 @@
 Идея позаимствована отсюда: https://habr.com/ru/post/459642/
 
 ## Описание функций
+### 3.06.22 Добавлены функции управления таймером2
+```C++
+//TC2 prescaler setup functions
+void MCU::TC::TC2_::TimerStop(void);
+void MCU::TC::TC2_::SetPrescaler1(void);
+void MCU::TC::TC2_::SetPrescaler8(void);
+void MCU::TC::TC2_::SetPrescaler32(void);
+void MCU::TC::TC2_::SetPrescaler64(void);
+void MCU::TC::TC2_::SetPrescaler128(void);
+void MCU::TC::TC2_::SetPrescaler256(void);
+void MCU::TC::TC2_::SetPrescaler1024(void);
+
+//TC2 interrupt setup functions
+void Ovf_Int_Enable(void);
+void Ovf_Int_Disable(void);
+
+```
 
 ### 18.06.22 Добавлены функции управления питанием в регистре PRR
 ```C++
@@ -43,9 +60,9 @@ void MCU::Core::set_WDT_I_Flag();            //Set WatchDog timer interrupt flag
 void MCU::Core::clear_WDT_I_Flag();          //Clear WatchDog timer interrupt flag
 
 //WDT interrupt enable flag functions
-void MCU::Core::WDT_Interrupt_Enable();      //Enable WatchDog timer interrupt
-void MCU::Core::WDT_Interrupt_Disable();     //Disable WatchDog timer interrupt
-bool MCU::Core::is_WDT_Interrupt_Enabled();  //Is WatchDog timer interrupt enabled?
+void MCU::Core::WDT_Interrupt_Enable();         //Enable WatchDog timer interrupt
+void MCU::Core::WDT_Interrupt_Disable();        //Disable WatchDog timer interrupt
+bool MCU::Core::is_WDT_Interrupt_Enabled();     //Is WatchDog timer interrupt enabled?
 
 //WDT Change enable flag functions
 void MCU::Core::WDT_Change_Enable(void);
