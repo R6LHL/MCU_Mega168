@@ -114,3 +114,14 @@ void MCU::IO_::ADC_digital_Input_Enable(uint8_t adc_pin_number);
 void MCU::IO_::AC_digital_Input_Enable(uint8_t ac_pin_number);
 void MCU::IO_::AC_digital_Input_Disable(uint8_t ac_pin_number);
 ```
+### Для работы с регистрами GPIOR0...2 используйте функции из RegisterBase.hpp: все регистры наследуют их.
+#### Например
+```C++
+MCU::IO_::GPIOR0_::Set(0xfa);
+```
+### Для работы с портами ВВ PORTB...D используйте функции из RegisterBase.hpp и IO_port_basic.hpp: все регистры ВВ наследуют их.
+#### Например
+```C++
+MCU::IO_::PORTB_::SetBit(3);
+MCU::IO_::PORTD_::pullupAll();
+```
