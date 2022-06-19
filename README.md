@@ -3,7 +3,20 @@
 
 Идея позаимствована отсюда: https://habr.com/ru/post/459642/
 
-## Описание функций
+## Объявления функций в файле RegisterBase.hpp
+```C++
+void Set(uint8_t value);            //set register value
+uint8_t Get(void);                  //get register value
+bool GetBit(uint8_t bit_number);    //get specified bit value
+void SetBit(uint8_t bit_number);    //set specified bit
+void ClearBit(uint8_t bit_number);  //clear specified bit
+```
+## Объявления функций в файле IO_port_basic.hpp
+```C++
+void pullupAll(void); //set all port pins with pullup
+void Hi_Z_All(void);  //set all port pins with Hi-Z impendance
+```
+## Объявления функций в файле MCU_Mega_168.hpp
 ### 3.06.22 Добавлены функции управления таймером2
 ```C++
 //TC2 prescaler setup functions
