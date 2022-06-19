@@ -70,157 +70,219 @@ namespace MCU
 		struct CLKPR_ : public RegisterBase<0x61> {};
 		// end Clock Precaler register
 		
+		/////////////////////////////////////////////////////////////////
 		//Watchdog timer control register
 		struct WDTCSR_ : public RegisterBase<0x60> {};
 		
+		//WDT interrupt flag functions
 		bool is_WDT_I_Flag_Set()
 		{
-			if (WDTCSR_::GetBit(7) == 0) return false;
+			if (!(WDTCSR_::GetBit(7))) return false;
 			else return true;
 		}
 		
 		void set_WDT_I_Flag(){WDTCSR_::SetBit(7);}
 		void clear_WDT_I_Flag(){WDTCSR_::SetBit(7);}
+		//end WDT interrupt flag functions
 		
-		void WDT_Interrupt_Enable()
+		//WDT interrupt enable flag functions
+		void WDT_Interrupt_Enable(){WDTCSR_::SetBit(6);}
+		void WDT_Interrupt_Disable(){WDTCSR_::ClearBit(6);}
+		bool is_WDT_InterruptEnabled()
+		{
+			if (!(WDTCSR_::GetBit(6))) return false;
+			else return true;
+		}
+		// end WDT interrupt enable flag functions
+		
+		// WDT Change enable flag functions
+		void WDT_Change_Enable(void){WDTCSR_::SetBit(4);}
+		void WDT_Change_Disable(void){WDTCSR_::ClearBit(4);}
+		// end WDT Change enable flag functions
+		
+		// WDT System reset enable flag functions
+		void WDT_System_reset_enable(void)
+		{
+			WDT_Change_Enable();
+			WDTCSR_::SetBit(3);
+		}
+		
+		void WDT_System_reset_disable(void)
+		{
+			WDT_Change_Enable();
+			WDTCSR_::ClearBit(3);
+		}
+		// end WDT System reset enable flag functions
+		
+		//WDT prescaler functions
+		void WDT_setPrescaler_2048(void) 				//16ms at 5v power supply
 		{
 			uint8_t byte_ = WDTCSR_ ::Get();
-			byte_ |= (1<<6);
+			byte_ &= ~((1<<5)|(1<<2)|(1<<1)|(1<<0));
+			WDT_Change_Enable();
 			WDTCSR_ ::Set(byte_);
 		}
 		
-		void WDT_Interrupt_Disable()
+		void WDT_setPrescaler_4096(void)				//32ms at 5v power supply
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~((1<<5)|(1<<2)|(1<<1));
+			byte_ |= (1<<0);
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		void WDT_setPrescaler_8192(void)				//64ms at 5v power supply
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~((1<<5)|(1<<2)|(1<<0));
+			byte_ |= (1<<1);
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		void WDT_setPrescaler_16348(void)				//128ms at 5v power supply
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~((1<<5)|(1<<2));
+			byte_ |= ((1<<1)|(1<<0));
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		void WDT_setPrescaler_32768(void)				//256ms at 5v power supply
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~((1<<5)|(1<<1)|(1<<0));
+			byte_ |= (1<<2);
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		void WDT_setPrescaler_65536(void)				//512ms at 5v power supply
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~((1<<5)|(1<<1));
+			byte_ |= ((1<<2)|(1<<0));
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+			
+		void WDT_setPrescaler_131072(void)				//1024ms at 5v power supply
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~((1<<5)|(1<<0));
+			byte_ |= ((1<<2)|(1<<1));
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		void WDT_setPrescaler_262144(void)				//2048ms at 5v power supply
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~(1<<5);
+			byte_ |= ((1<<2)|(1<<1)|(1<<0));
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		void WDT_setPrescaler_524288(void)				//4096ms at 5v power supply
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~((1<<2)|(1<<1)|(1<<0));
+			byte_ |= (1<<5);
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		void WDT_setPrescaler_1048576(void)				//8192ms at 5v power supply
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~((1<<2)|(1<<1));
+			byte_ |= ((1<<5)|(1<<0));
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+		//end WDT prescaler functions
+		
+		//WDT Configurations if WDTON fuse bit is not set
+		void WDT_stop(void)
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~((1<<6)|(1<<3));
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		void WDT_interrupt_mode(void)
+		{
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ &= ~(1<<3);
+			byte_ |= (1<<6);
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
+		}
+		
+		void WDT_SystemReset_mode(void)
 		{
 			uint8_t byte_ = WDTCSR_ ::Get();
 			byte_ &= ~(1<<6);
+			byte_ |= (1<<3);
+			WDT_Change_Enable();
 			WDTCSR_ ::Set(byte_);
 		}
 		
-		bool is_WDT_Interrupt_Enabled()
+		void WDT_Interrupt_And_SystemReset_mode(void)
 		{
-			if (WDTCSR_::GetBit(6) == 0) return false;
-			else return true;
+			uint8_t byte_ = WDTCSR_ ::Get();
+			byte_ |= ((1<<6)|(1<<3));
+			WDT_Change_Enable();
+			WDTCSR_ ::Set(byte_);
 		}
-		
-						
+		//end WDT Configurations
 		// end Watchdog timer control register
 		
+		/////////////////////////////////////////////////////
 		//Power reduction register
 		struct PRR_ : public RegisterBase<0x64> {};
 		
 		//ADC power management
-		static void ADC_powerUp(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ &= ~(1<<0);
-				PRR_ ::Set(byte_);
-			}
-			
-		static void ADC_powerDown(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ |= (1<<0);
-				PRR_ ::Set(byte_);
-			}
+		static void ADC_powerUp(void){PRR_::ClearBit(0);}
+		static void ADC_powerDown(void){PRR_::SetBit(0);}
 		//end ADC power management
 		
 		//USART0 power management
-		static void USART0_powerUp(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ &= ~(1<<1);
-				PRR_ ::Set(byte_);
-			}
-			
-		static void USART0_powerDown(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ |= (1<<1);
-				PRR_ ::Set(byte_);
-			}
+		static void USART0_powerUp(void){PRR_::ClearBit(1);}	
+		static void USART0_powerDown(void){PRR_::SetBit(1);}
 		//end USART0 power management
 		
 		//SPI power management
-		static void SPI_powerUp(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ &= ~(1<<2);
-				PRR_ ::Set(byte_);
-			}
-			
-		static void SPI_powerDown(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ |= (1<<2);
-				PRR_ ::Set(byte_);
-			}
+		static void SPI_powerUp(void){PRR_::ClearBit(2);}	
+		static void SPI_powerDown(void){PRR_::SetBit(2);}
 		//end SPI power management
 		
 		//Timer1 power management
-		static void TC1_powerUp(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ &= ~(1<<3);
-				PRR_ ::Set(byte_);
-			}
-			
-		static void TC1_powerDown(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ |= (1<<3);
-				PRR_ ::Set(byte_);
-			}
+		static void TC1_powerUp(void){PRR_::ClearBit(3);}
+		static void TC1_powerDown(void){PRR_::SetBit(3);}
 		//end Timer1 power management
 		
 		//Timer0 power management
-		static void TC0_powerUp(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ &= ~(1<<5);
-				PRR_ ::Set(byte_);
-			}
-			
-		static void TC0_powerDown(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ |= (1<<5);
-				PRR_ ::Set(byte_);
-			}
+		static void TC0_powerUp(void){PRR_::ClearBit(5);}
+		static void TC0_powerDown(void){PRR_::SetBit(5);}
 		//end Timer0 power management
 		
 		//Timer2 power management
-		static void TC2_powerUp(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ &= ~(1<<6);
-				PRR_ ::Set(byte_);
-			}
-			
-		static void TC2_powerDown(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ |= (1<<6);
-				PRR_ ::Set(byte_);
-			}
+		static void TC2_powerUp(void){PRR_::ClearBit(6);}	
+		static void TC2_powerDown(void){PRR_::SetBit(6);}
 		//end Timer2 power management
 		
 		//TWI power management
-		static void TWI_powerUp(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ &= ~(1<<7);
-				PRR_ ::Set(byte_);
-			}
-			
-		static void TWI_powerDown(void)
-			{
-				uint8_t byte_ = PRR_ ::Get();
-				byte_ |= (1<<7);
-				PRR_ ::Set(byte_);
-			}
+		static void TWI_powerUp(void){PRR_::ClearBit(7);}
+		static void TWI_powerDown(void){PRR_::SetBit(7);}
 		//end TWI power management
 			
 		// end Power reduction register
+		//////////////////////////////////////////////////////
 		/*
 		inline void cli(void) {asm volatile ("cli");}
 		inline void sei(void) {asm volatile ("sei");}
