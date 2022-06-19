@@ -17,8 +17,8 @@ void MCU::TC::TC2_::SetPrescaler256(void);
 void MCU::TC::TC2_::SetPrescaler1024(void);
 
 //TC2 interrupt setup functions
-void Ovf_Int_Enable(void);
-void Ovf_Int_Disable(void);
+void MCU::TC::TC2_::Ovf_Int_Enable(void);
+void MCU::TC::TC2_::Ovf_Int_Disable(void);
 
 ```
 
