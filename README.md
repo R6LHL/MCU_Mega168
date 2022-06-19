@@ -56,16 +56,16 @@ void WDT_System_reset_enable(void);
 void WDT_System_reset_disable(void);
 
 //WDT prescaler functions
-void WDT_setPrescaler_2048(void);
-void WDT_setPrescaler_4096(void);
-void WDT_setPrescaler_8192(void);
-void WDT_setPrescaler_16348(void);
-void WDT_setPrescaler_32768(void);
-void WDT_setPrescaler_65536(void);
-void WDT_setPrescaler_131072(void);
-void WDT_setPrescaler_262144(void);
-void WDT_setPrescaler_524288(void);
-void WDT_setPrescaler_1048576(void);
+void WDT_setPrescaler_2048(void);     //16ms at 5v power supply
+void WDT_setPrescaler_4096(void);     //32ms at 5v power supply
+void WDT_setPrescaler_8192(void);     //64ms at 5v power supply
+void WDT_setPrescaler_16348(void);    //128ms at 5v power supply
+void WDT_setPrescaler_32768(void);    //256ms at 5v power supply
+void WDT_setPrescaler_65536(void);    //512ms at 5v power supply
+void WDT_setPrescaler_131072(void);   //1024ms at 5v power supply
+void WDT_setPrescaler_262144(void);   //2048ms at 5v power supply
+void WDT_setPrescaler_524288(void);   //4096ms at 5v power supply
+void WDT_setPrescaler_1048576(void);  //8192ms at 5v power supply
 
 //WDT Configurations if WDTON fuse bit is not set
 void WDT_stop(void);
