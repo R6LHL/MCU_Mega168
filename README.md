@@ -103,9 +103,14 @@ void MCU::Core::WDT_interrupt_mode(void);
 void MCU::Core::WDT_SystemReset_mode(void);
 void MCU::Core::WDT_Interrupt_And_SystemReset_mode(void);
 ```
-### Добавлены функции отключения цифрового буфера ввода на ADC-выводах (энергопотребление)
-
+### Добавлены функции включения/отключения цифрового буфера ввода на ADC-выводах (энергопотребление)
+#### Функции для АЦП
 ```C++
 void MCU::IO_::ADC_digital_Input_Disable(uint8_t adc_pin_number);
 void MCU::IO_::ADC_digital_Input_Enable(uint8_t adc_pin_number);
+```
+#### Функции для аналогового компаратора
+```C++
+void MCU::IO_::AC_digital_Input_Enable(uint8_t ac_pin_number);
+void MCU::IO_::AC_digital_Input_Disable(uint8_t ac_pin_number);
 ```
