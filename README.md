@@ -109,117 +109,85 @@ void MCU::Watchdog::Mode::interrupt(void);
 void MCU::Watchdog::Mode::SystemReset(void);
 void MCU::Watchdog::Mode::Interrupt_And_SystemReset(void);
 ```
-#### namespace 
 
-## ******************************************************
-_________________________________________________
-### 3.06.22 Добавлены функции управления таймером2
+#### namespace MCU::EXINT_
 ```C++
-//TC2 prescaler setup functions
-void MCU::TC::TC2_::TimerStop(void);
-void MCU::TC::TC2_::SetPrescaler1(void);
-void MCU::TC::TC2_::SetPrescaler8(void);
-void MCU::TC::TC2_::SetPrescaler32(void);
-void MCU::TC::TC2_::SetPrescaler64(void);
-void MCU::TC::TC2_::SetPrescaler128(void);
-void MCU::TC::TC2_::SetPrescaler256(void);
-void MCU::TC::TC2_::SetPrescaler1024(void);
-
-//TC2 interrupt setup functions
-void MCU::TC::TC2_::Ovf_Int_Enable(void);
-void MCU::TC::TC2_::Ovf_Int_Disable(void);
 ```
-### 18.06.22 Добавлены функции управления питанием в регистре PRR
+
+#### namespace MCU::TC0_
 ```C++
-//ADC power management
-void MCU::Core::ADC_powerUp(void);
-void MCU::Core::ADC_powerDown(void);
-
-//USART0 power management
-void MCU::Core::USART0_powerUp(void);
-void MCU::Core::USART0_powerDown(void);
-
-//SPI power management
-void MCU::Core::SPI_powerUp(void);
-void MCU::Core::SPI_powerDown(void);
-
-//Timer1 power management
-void MCU::Core::TC1_powerUp(void);
-void MCU::Core::TC1_powerDown(void);
-
-//Timer0 power management
-void MCU::Core::TC0_powerUp(void);
-void MCU::Core::TC0_powerDown(void);
-
-//Timer2 power management
-void MCU::Core::TC2_powerUp(void);
-void MCU::Core::TC2_powerDown(void);
-
-//TWI power management
-void MCU::Core::TWI_powerUp(void);
-void MCU::Core::TWI_powerDown(void);
+void MCU::TC0_::PowerUp(void);
+void MCU::TC0_::PowerDown(void);
 ```
-### 19.06.22 Добавлены функции для работы с WatchDog timer
+
+#### namespace MCU::TC1_
 ```C++
-//WDT interrupt flag functions
-bool MCU::Core::is_WDT_I_Flag_Set();         //Is WatchDog timer interrupt flag set?
-void MCU::Core::set_WDT_I_Flag();            //Set WatchDog timer interrupt flag
-void MCU::Core::clear_WDT_I_Flag();          //Clear WatchDog timer interrupt flag
-
-//WDT interrupt enable flag functions
-void MCU::Core::WDT_Interrupt_Enable();         //Enable WatchDog timer interrupt
-void MCU::Core::WDT_Interrupt_Disable();        //Disable WatchDog timer interrupt
-bool MCU::Core::is_WDT_Interrupt_Enabled();     //Is WatchDog timer interrupt enabled?
-
-//WDT Change enable flag functions
-void MCU::Core::WDT_Change_Enable(void);
-void MCU::Core::WDT_Change_Disable(void);
-
-//WDT System reset enable flag functions
-void MCU::Core::WDT_System_reset_enable(void);
-void MCU::Core::WDT_System_reset_disable(void);
-
-//WDT prescaler functions
-void MCU::Core::WDT_setPrescaler_2048(void);     //16ms at 5v power supply
-void MCU::Core::WDT_setPrescaler_4096(void);     //32ms at 5v power supply
-void MCU::Core::WDT_setPrescaler_8192(void);     //64ms at 5v power supply
-void MCU::Core::WDT_setPrescaler_16348(void);    //128ms at 5v power supply
-void MCU::Core::WDT_setPrescaler_32768(void);    //256ms at 5v power supply
-void MCU::Core::WDT_setPrescaler_65536(void);    //512ms at 5v power supply
-void MCU::Core::WDT_setPrescaler_131072(void);   //1024ms at 5v power supply
-void MCU::Core::WDT_setPrescaler_262144(void);   //2048ms at 5v power supply
-void MCU::Core::WDT_setPrescaler_524288(void);   //4096ms at 5v power supply
-void MCU::Core::WDT_setPrescaler_1048576(void);  //8192ms at 5v power supply
-
-//WDT Configurations if WDTON fuse bit is not set
-void MCU::Core::WDT_stop(void);
-void MCU::Core::WDT_interrupt_mode(void);
-void MCU::Core::WDT_SystemReset_mode(void);
-void MCU::Core::WDT_Interrupt_And_SystemReset_mode(void);
+void MCU::TC1_::PowerUp(void);
+void MCU::TC1_::PowerDown(void);
 ```
-### Добавлены функции включения/отключения цифрового буфера ввода на ADC и AC-выводах (энергопотребление)
-#### Функции для АЦП
+#### namespace MCU::TC2_
 ```C++
-void MCU::IO_::ADC_digital_Input_Disable(uint8_t adc_pin_number);
-void MCU::IO_::ADC_digital_Input_Enable(uint8_t adc_pin_number);
+void MCU::TC2_::PowerUp(void);
+void MCU::TC2_::PowerDown(void);
+void MCU::TC2_::TimerStop(void);
 ```
-#### Функции для аналогового компаратора
+##### namespace MCU::TC2_::Prescaler
 ```C++
-void MCU::IO_::AC_digital_Input_Enable(uint8_t ac_pin_number);
-void MCU::IO_::AC_digital_Input_Disable(uint8_t ac_pin_number);
+void MCU::TC2_::Prescaler::reset(void);
+void MCU::TC2_::Prescaler::set_1(void);
+void MCU::TC2_::Prescaler::set_8(void);
+void MCU::TC2_::Prescaler::set_32(void);
+void MCU::TC2_::Prescaler::set_64(void);
+void MCU::TC2_::Prescaler::set_128(void);
+void MCU::TC2_::Prescaler::set_256(void);
+void MCU::TC2_::Prescaler::set_1024(void);
 ```
-### Добавлены функции для работы с режимами спячки
-#### Установка режимов спячки
+##### namespace MCU::TC2_::Interrupt_source
 ```C++
-void MCU::Core::sleepMode_Idle(void);
-void MCU::Core::sleepMode_ADC_NoiseReduction(void);
-void MCU::Core::sleepMode_PowerDown(void);
-void MCU::Core::sleepMode_PowerSave(void);
-void MCU::Core::sleepMode_Standby(void);
-void MCU::Core::sleepMode_ExtendedStandby(void);
+void MCU::TC2_::Interrupt_source::Overflow_Enable(void);
+void MCU::TC2_::Interrupt_source::Overflow_Disable(void);
 ```
-#### Разрешение/запрещение спячки
+
+#### namespace MCU::SPI_
 ```C++
-void MCU::Core::sleepEnable(void); // разрешает переход контроллера в спящий режим по команде sleep
-void MCU::Core::sleepDisable(void); // запрещает переход контроллера в спящий режим по команде sleep
+void MCU::SPI_::powerUp(void);
+void MCU::SPI_::powerDown(void);
+
+void MCU::SPI_::Enable(void);
+void MCU::SPI_::Disable(void);
+
+void MCU::SPI_::Interrupt_Enable(void);
+void MCU::SPI_::Interrupt_Disable(void);
+
+void MCU::SPI_::Set_As_Master(void);
+void MCU::SPI_::Set_As_Slave(void);
+
+uint8_t read(void);
+void write(uint8_t v);
+
+bool is_Transfer_Complete(void);
+bool is Data_Collision(void);
+```
+##### namespace MCU::SPI_::Data_Order
+```C++
+void MCU::SPI_::Data_Order::MSB_first(void);
+void MCU::SPI_::Data_Order::LSB_first(void);
+```
+##### namespace MCU::SPI_::Mode
+```C++
+void MCU::SPI_::SCK_Setup::Mode::Set_0(void);
+void MCU::SPI_::SCK_Setup::Mode::Set_1(void);
+void MCU::SPI_::SCK_Setup::Mode::Set_2(void);
+void MCU::SPI_::SCK_Setup::Mode::Set_3(void);
+```
+##### namespace MCU::SPI_::SCK_Setup::Rate
+```C++
+void MCU::SPI_::SCK_Setup::Rate::F_div_2(void);
+void MCU::SPI_::SCK_Setup::Rate::F_div_4(void);
+void MCU::SPI_::SCK_Setup::Rate::F_div_8(void);
+void MCU::SPI_::SCK_Setup::Rate::F_div_16(void);
+void MCU::SPI_::SCK_Setup::Rate::F_div_32(void);
+void MCU::SPI_::SCK_Setup::Rate::F_div_32x2(void);
+void MCU::SPI_::SCK_Setup::Rate::F_div_64(void);
+void MCU::SPI_::SCK_Setup::Rate::F_div_128(void);
 ```
