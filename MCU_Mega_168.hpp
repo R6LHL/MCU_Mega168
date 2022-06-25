@@ -312,6 +312,10 @@ namespace MCU
 		}
 		//end WDT Configurations
 		// end Watchdog timer control register
+		
+		//General TC control register
+		struct GTCCR_ : public RegisterBase<0x43>	{};
+		//end General TC control register
 	}	
 	
 	namespace EXINT_ //external interrupts
@@ -349,196 +353,193 @@ namespace MCU
 		// end Pin Change mask register 0
 		
 	}// end external interrupts
-	
-	namespace TC //Timer_counters
+		
+	namespace TC0_ // Timer-counter 0 8bit
 	{
+		//TC0_ flag register
+		struct TIFR0_ : public RegisterBase<0x35> {};
+		// end TC0_ flag register
 	
-		//General TC control register
-		struct GTCCR_ : public RegisterBase<0x43>	{};
-		//end General TC control register
+		// TC0_ control register A
+		struct TCCR0A_ : public RegisterBase<0x44> {};
+		//end  TC0_ control register A
 		
-		namespace TC0_ // Timer-counter 0 8bit
-		{
-			//TC0_ flag register
-			struct TIFR0_ : public RegisterBase<0x35> {};
-			// end TC0_ flag register
+		// TC0_ control register B
+		struct TCCR0B_ : public RegisterBase<0x45> {};
+		//end TC0_ control register B
 		
-			// TC0_ control register A
-			struct TCCR0A_ : public RegisterBase<0x44> {};
-			//end  TC0_ control register A
-		
-			// TC0_ control register B
-			struct TCCR0B_ : public RegisterBase<0x45> {};
-			//end TC0_ control register B
-		
-			// TC0_ interrupt mask register
-			struct TIMSK0_ : public RegisterBase<0x6e> {};
-			// end TC0_ interrupt mask register
+		// TC0_ interrupt mask register
+		struct TIMSK0_ : public RegisterBase<0x6e> {};
+		// end TC0_ interrupt mask register
 			
-			// TC0_ Counter value register
-			struct TCNT0_ : public RegisterBase<0x46> {};
-			// end TC0_ Counter value register
+		// TC0_ Counter value register
+		struct TCNT0_ : public RegisterBase<0x46> {};
+		// end TC0_ Counter value register
 			
-			// TC0_ output compare register A
-			struct OCR0A_ : public RegisterBase<0x47> {};
-			//end TC0_ output compare register A
+		// TC0_ output compare register A
+		struct OCR0A_ : public RegisterBase<0x47> {};
+		//end TC0_ output compare register A
 			
-			// TC0_ output compare register B
-			struct OCR0B_ : public RegisterBase<0x48> {};
-			//end TC0_ output compare register B
+		// TC0_ output compare register B
+		struct OCR0B_ : public RegisterBase<0x48> {};
+		//end TC0_ output compare register B
 			
-			//Timer0 power management
-			static void TC0_powerUp(void){Core::PRR_::ClearBit(5);}
-			static void TC0_powerDown(void){Core::PRR_::SetBit(5);}
-			//end Timer0 power management
+		//Timer0 power management
+		static void powerUp(void){Core::PRR_::ClearBit(5);}
+		static void powerDown(void){Core::PRR_::SetBit(5);}
+		//end Timer0 power management
 						
-		} //end Timer-counter 0
+	} //end Timer-counter 0
 		
-		namespace TC1_ // Timer-counter 1 16bit
-		{
-			//TC1_ control register A
-			struct TCCR1A_ : public RegisterBase<0x80> {}; 
-			//end TC1_ control register A
+	namespace TC1_ // Timer-counter 1 16bit
+	{
+		//TC1_ control register A
+		struct TCCR1A_ : public RegisterBase<0x80> {}; 
+		//end TC1_ control register A
 			
-			//TC1_ control register B
-			struct TCCR1B_ : public RegisterBase<0x81> {};
-			//end TC1_ control register B
+		//TC1_ control register B
+		struct TCCR1B_ : public RegisterBase<0x81> {};
+		//end TC1_ control register B
 			
-			//TC1_ control register C
-			struct TCCR1C_ : public RegisterBase<0x82> {};
-			//end TC1_ control register C
+		//TC1_ control register C
+		struct TCCR1C_ : public RegisterBase<0x82> {};
+		//end TC1_ control register C
 			
-			//?????????????????Access????????????????????????????????????
-			// TC1_ Counter value low byte
-			struct TCNT1L_ : public RegisterBase<0x84> {};
-			//end TC1_ Counter value low byte
+		//?????????????????Access????????????????????????????????????
+		// TC1_ Counter value low byte
+		struct TCNT1L_ : public RegisterBase<0x84> {};
+		//end TC1_ Counter value low byte
 			
-			// TC1_ Counter value high byte
-			struct TCNT1H_ : public RegisterBase<0x85> {};
-			//end TC1_ Counter value high byte
-			//?????????????????Access????????????????????????????????????
+		// TC1_ Counter value high byte
+		struct TCNT1H_ : public RegisterBase<0x85> {};
+		//end TC1_ Counter value high byte
+		//?????????????????Access????????????????????????????????????
 			
-			//?????????????????Access????????????????????????????????????
-			// TC1_ input capture register 1 low byte
-			struct ICR1L_ : public RegisterBase<0x86> {};
-			//end TC1_ input capture register1 low byte
+		//?????????????????Access????????????????????????????????????
+		// TC1_ input capture register 1 low byte
+		struct ICR1L_ : public RegisterBase<0x86> {};
+		//end TC1_ input capture register1 low byte
 			
-			// TC1_ input capture register 1 high byte
-			struct ICR1H_ : public RegisterBase<0x87> {};
-			//end TC1_ input capture register 1 high byte
-			//?????????????????Access????????????????????????????????????
+		// TC1_ input capture register 1 high byte
+		struct ICR1H_ : public RegisterBase<0x87> {};
+		//end TC1_ input capture register 1 high byte
+		//?????????????????Access????????????????????????????????????
 			
-			//TC1_ Output compare register 1 A low byte
-			struct OCR1AL_ : public RegisterBase<0x88> {};
-			//end TC1_ Output compare register 1 A low byte
+		//TC1_ Output compare register 1 A low byte
+		struct OCR1AL_ : public RegisterBase<0x88> {};
+		//end TC1_ Output compare register 1 A low byte
 			
-			//TC1_ Output compare register 1 A high byte
-			struct OCR1AH_ : public RegisterBase<0x89> {};
-			//end TC1_ Output compare register 1 A high byte
+		//TC1_ Output compare register 1 A high byte
+		struct OCR1AH_ : public RegisterBase<0x89> {};
+		//end TC1_ Output compare register 1 A high byte
 			
-			//TC1_ Output compare register 1 B low byte
-			struct OCR1BL_ : public RegisterBase<0x8a> {};
-			//end TC1_ Output compare register 1 B low byte
+		//TC1_ Output compare register 1 B low byte
+		struct OCR1BL_ : public RegisterBase<0x8a> {};
+		//end TC1_ Output compare register 1 B low byte
 			
-			//TC1_ Output compare register 1 B high byte
-			struct OCR1BH_ : public RegisterBase<0x8b> {};
-			//end TC1_ Output compare register 1 B high byte
+		//TC1_ Output compare register 1 B high byte
+		struct OCR1BH_ : public RegisterBase<0x8b> {};
+		//end TC1_ Output compare register 1 B high byte
 			
-			//TC1_ interrupt mask register
-			struct TIMSK1_ : public RegisterBase<0x6f> {};
-			// end TC1_ interrupt mask register
+		//TC1_ interrupt mask register
+		struct TIMSK1_ : public RegisterBase<0x6f> {};
+		// end TC1_ interrupt mask register
 			
-			//TC1_ interrupt flag register
-			struct TIFR1_ : public RegisterBase<0x36> {};
-			// end TC1_ interrupt flag register
+		//TC1_ interrupt flag register
+		struct TIFR1_ : public RegisterBase<0x36> {};
+		// end TC1_ interrupt flag register
 			
 			
-			//Timer1 power management
-			static void TC1_powerUp(void){Core::PRR_::ClearBit(3);}
-			static void TC1_powerDown(void){Core::PRR_::SetBit(3);}
-			//end Timer1 power management
+		//Timer1 power management
+		static void powerUp(void){Core::PRR_::ClearBit(3);}
+		static void powerDown(void){Core::PRR_::SetBit(3);}
+		//end Timer1 power management
 					
-		}//end  Timer-counter 1 16bit
+	}//end  Timer-counter 1 16bit
 		
-		namespace TC2_ // Timer-counter 2 8bit
-		{	
-			//TC2_ control register A
-			struct TCCR2A_ : public RegisterBase<0xb0> {};
-			// end TC2_ control register A
+	namespace TC2_ // Timer-counter 2 8bit
+	{	
+		//TC2_ control register A
+		struct TCCR2A_ : public RegisterBase<0xb0> {};
+		// end TC2_ control register A
+		
+		//TC2_ control register B
+		struct TCCR2B_ : public RegisterBase<0xb1> {};
+		// end TC2_ control register B
+		
+		//TC2_ counter value register
+		struct TCNT2_ : public RegisterBase<0xb2> {};
+		// end TC2_ counter value register
 			
-			//TC2_ control register B
-			struct TCCR2B_ : public RegisterBase<0xb1> {};
-			// end TC2_ control register B
+		//TC2_ output compare register A
+		struct OCR2A_ : public RegisterBase<0xb3> {};
+		// end TC2_ output compare register A
 			
-			//TC2_ counter value register
-			struct TCNT2_ : public RegisterBase<0xb2> {};
-			// end TC2_ counter value register
+		//TC2_ output compare register B
+		struct OCR2B_ : public RegisterBase<0xb4e> {};
+		// end TC2_ output compare register B
 			
-			//TC2_ output compare register A
-			struct OCR2A_ : public RegisterBase<0xb3> {};
-			// end TC2_ output compare register A
-			
-			//TC2_ output compare register B
-			struct OCR2B_ : public RegisterBase<0xb4e> {};
-			// end TC2_ output compare register B
-			
-			//TC2_ iterrupt mask register
-			struct TIMSK2_ : public RegisterBase<0x70> {};
-			// end TC2_ iterrupt mask register
+		//TC2_ iterrupt mask register
+		struct TIMSK2_ : public RegisterBase<0x70> {};
+		// end TC2_ iterrupt mask register
 						
-			//TC2_ iterrupt flag register
-			struct TIFR2_ : public RegisterBase<0x37> {};
-			// end TC2_ iterrupt flag register
+		//TC2_ iterrupt flag register
+		struct TIFR2_ : public RegisterBase<0x37> {};
+		// end TC2_ iterrupt flag register
 			
-			//Asynchronous status register
-			struct ASSR_ : public RegisterBase<0xb6> {};
-			//end Asynchronous status register
+		//Asynchronous status register
+		struct ASSR_ : public RegisterBase<0xb6> {};
+		//end Asynchronous status register
 			
-			//Timer2 power management
-			static void powerUp(void){Core::PRR_::ClearBit(6);}	
-			static void powerDown(void){Core::PRR_::SetBit(6);}
-			//end Timer2 power management
+		//Timer2 power management
+		static void powerUp(void){Core::PRR_::ClearBit(6);}	
+		static void powerDown(void){Core::PRR_::SetBit(6);}
+		//end Timer2 power management
 			
-			static void TimerStop(void)
-			{
-				uint8_t byte_ = TCCR2B_ ::Get();
-				byte_ &= ~((1<<2)|(1<<1)|(1<<0));
-				TCCR2B_ ::Set(byte_);
-			}
-				
-			static void SetPrescaler1(void)
+		static void TimerStop(void)
+		{
+			uint8_t byte_ = TCCR2B_ ::Get();
+			byte_ &= ~((1<<2)|(1<<1)|(1<<0));
+			TCCR2B_ ::Set(byte_);
+		}
+		
+		namespace Prescaler
+		{
+			static void reset(void){Core::GTCCR_::SetBit(1);}
+			
+			static void set_1(void)
 			{
 				uint8_t byte_ = TCCR2B_ ::Get();
 				byte_ &= ~((1<<2));
 				byte_ |= (1<<0);
 				TCCR2B_ ::Set(byte_);
 			}
-				
-			static void SetPrescaler8(void)
+			
+			static void set_8(void)
 			{
 				uint8_t byte_ = TCCR2B_ ::Get();
 				byte_ &= ~((1<<2)|(1<<0));
 				byte_ |= (1<<1);
 				TCCR2B_ ::Set(byte_);
 			}
-				
-			static void SetPrescaler32(void)
+			
+			static void set_32(void)
 			{
 				uint8_t byte_ = TCCR2B_ ::Get();
 				byte_ &= ~(1<<2);
 				byte_ |= ((1<<1)|(1<<0));
 				TCCR2B_ ::Set(byte_);
 			}
-				
-			static void SetPrescaler64(void)
+			
+			static void set_64(void)
 			{			
 				uint8_t byte_ = TCCR2B_ ::Get();
 				byte_ &= ~((1<<1)|(1<<0));
 				byte_ |= (1<<2);
 				TCCR2B_ ::Set(byte_);
 			}
-				
-			static void SetPrescaler128(void)
+			
+			static void set_128(void)
 			{
 				uint8_t byte_ = TCCR2B_ ::Get();
 				byte_ &= ~(1<<1);
@@ -546,7 +547,7 @@ namespace MCU
 				TCCR2B_ ::Set(byte_);
 			}
 			
-			static void SetPrescaler256(void)
+			static void set_256(void)
 			{
 				uint8_t byte_ = TCCR2B_ ::Get();
 				byte_ &= ~(1<<0);
@@ -554,20 +555,22 @@ namespace MCU
 				TCCR2B_ ::Set(byte_);
 			}
 			
-			static void SetPrescaler1024(void)
+			static void set_1024(void)
 			{
 				uint8_t byte_ = TCCR2B_ ::Get();
 				byte_ |= ((1<<2)|(1<<1)|(1<<0));
 				TCCR2B_ ::Set(byte_);
 			}
+		}
+		
+		namespace Interrupt_source
+		{
+			static void Overflow_Enable(void){TIMSK2_::SetBit(0);}
+			static void Overflow_Disable(void){TIMSK2_::ClearBit(0);}
+		}
 			
-			//Overflow interrupt enable
-			static void Ovf_Int_Enable(void){TIMSK2_::SetBit(0);}
-			//Overflow interrupt disable
-			static void Ovf_Int_Disable(void){TIMSK2_::ClearBit(0);}
-			
-		}// end Timer-counter 2 8bit
-	}//end Timer_counters
+	}// end Timer-counter 2 8bit
+
 	
 	
 	//Serial-peripherial interface
@@ -575,19 +578,155 @@ namespace MCU
 	{
 		//SPI_ control register 0
 		struct SPCR0_ : public RegisterBase<0x4c> {};
+		
+		static void Interrupt_Enable(void){SPCR0_::SetBit(7);}
+		static void Interrupt_Disable(void){SPCR0_::ClearBit(7);}
+		
+		static void Enable(void){SPCR0_::SetBit(6);}
+		static void Disable(void){SPCR0_::ClearBit(6);}
+		
+		static void Set_As_Master(void){SPCR0_::SetBit(4);}
+		static void Set_As_Slave(void){SPCR0_::ClearBit(4);}
+						
+		namespace Data_Order
+		{
+			static void MSB_first(void){SPCR0_::ClearBit(5);}
+			static void LSB_first(void){SPCR0_::SetBit(5);}
+		}
+		
+		namespace Mode
+		{
+		
+			static void set_0(void)
+			{
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte &= ~((1<<3)(1<<2));
+				SPCR0_::Set(config_byte);
+			}
+			
+			static void set_1(void)
+			{
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte &= ~(1<<3);
+				config_byte |= (1<<2);
+				SPCR0_::Set(config_byte);
+			}
+			
+			static void set_2(void)
+			{
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte &= ~(1<<2);
+				config_byte |= (1<<3);
+				SPCR0_::Set(config_byte);
+			}
+			
+			static void set_3(void)
+			{
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte |= ((1<<3)|(1<<2));
+				SPCR0_::Set(config_byte);
+			}
+		}
+		
+		namespace Rate
+		{
+			static void F_div_2(void)
+			{
+				SPSR0_::SetBit(0);
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte &= ~((1<<1)|(1<<0));
+				SPCR0_::Set(config_byte);
+			}
+			
+			static void F_div_4(void)
+			{
+				SPSR0_::ClearBit(0);
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte &= ~(1<<1);
+				config_byte |= (1<<0);
+				SPCR0_::Set(config_byte);
+			}
+			
+			static void F_div_8(void)
+			{
+				SPSR0_::SetBit(0);
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte &= ~(1<<0);
+				config_byte |= (1<<1);
+				SPCR0_::Set(config_byte);
+			}
+				
+			static void F_div_16(void)
+			{
+				SPSR0_::ClearBit(0);
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte |= ((1<<1)|(1<<0));
+				SPCR0_::Set(config_byte);
+			}
+				
+			static void F_div_32(void)
+			{
+				SPSR0_::SetBit(0);
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte &= ~((1<<1)|(1<<0));
+				SPCR0_::Set(config_byte);
+			}
+				
+			static void F_div_32x2(void)
+			{
+				SPSR0_::ClearBit(0);
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte &= ~(1<<1);
+				config_byte |= (1<<0);
+				SPCR0_::Set(config_byte);
+			}
+				
+			static void F_div_64(void)
+			{
+				SPSR0_::SetBit(0);
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte &= ~(1<<0);
+				config_byte |= (1<<1);
+				SPCR0_::Set(config_byte);
+			}
+				
+			static void F_div_128(void)
+			{
+				SPSR0_::ClearBit(0);
+				uint8_t config_byte = SPCR0_::Get();
+				config_byte |= ((1<<1)|(1<<0));
+				SPCR0_::Set(config_byte);
+			}
+				
+		}
 		//end SPI_ control register 0
 		
 		//SPI_ status register 0
 		struct SPSR0_ : public RegisterBase<0x4d> {};
+		
+		bool is_Transfer_Complete(void){return SPSR::GetBit(7);}
+		bool is Data_Collision(void){return SPSR::GetBit(6);}
 		// end SPI_ status register 0
 		
 		//SPI_ data register 0
 		struct SPDR0_ : public RegisterBase<0x4e> {};
+		
+		static uint8_t read(void)
+		{
+			while(!is_Transfer_Complete());
+			return SPDR0_::Get();
+		}
+		static void write(uint8_t v)
+		{
+			while(!is_Transfer_Complete());
+			SPDR0_::Set(v);
+		}
+		
 		//end SPI_ data register 0
 		
 		//SPI power management
-		static void SPI_powerUp(void){Core::PRR_::ClearBit(2);}	
-		static void SPI_powerDown(void){Core::PRR_::SetBit(2);}
+		static void powerUp(void){Core::PRR_::ClearBit(2);}	
+		static void powerDown(void){Core::PRR_::SetBit(2);}
 		//end SPI power management
 
 	}// end Serial-peripherial interface
@@ -689,7 +828,7 @@ namespace MCU
 		{
 			if ((ac_pin_number == 0) || (ac_pin_number == 1))
 			{
-				DIDR1_::ClearBit(ac_pin_number);
+				DIDR1_::SetBit(ac_pin_number);
 			}
 			else return;
 		}
@@ -702,23 +841,209 @@ namespace MCU
 	{
 		//ADC multiplexer selection register
 		struct ADMUX_ : public RegisterBase<0x7c> {};
+		
+		namespace Reference
+		{
+			static void AREF(void)
+			{
+				uint8_t byte_ = ADMUX_::Get();
+				byte_ &= ~((1<<7)|(1<<6));
+				ADMUX_::Set(byte_);
+			}
+			
+			static void AVCC(void)
+			{
+				uint8_t byte_ = ADMUX_::Get();
+				byte_ &= ~(1<<7);
+				byte_ |= (1<<6);
+				ADMUX_::Set(byte_);
+			}
+			
+			static void Internal_1V1(void)
+			{
+				uint8_t byte_ = ADMUX_::Get();
+				byte_ |= ((1<<7)|(1<<6));
+				ADMUX_::Set(byte_);
+			}
+		}
+		
+		namespace Adjust_Result
+		{
+			static void Left(void)	{ADMUX_::SetBit(5);}
+			static void Right(void){ADMUX_::ClearBit(5);}
+			static bool is_Result_Left_Adjusted(void){return ADMUX_::GetBit(5);}
+		}
+
+		static void Select_Channel_(uint8_t ch)
+		{
+			uint8_t byte_ = ADMUX_::Get();
+			byte_ &= ~((1<<3)|(1<<2)|(1<<1)|(1<<0));
+			
+			if ((ch >=0) && (ch <= 7)){byte_ |= ch;}
+			else {ch = 0;}
+			ADMUX_::Set(byte_);
+			return;
+		}
 		// end ADC multiplexer selection register
 		
 		//ADC control and status register A
 		struct ADCSRA_ : public RegisterBase<0x7a> {};
+		
+		static void Enable(void){ADCSRA_::SetBit(7);}
+		static void Disable(void){ADCSRA_::ClearBit(7);}
+		static void Start_Conversion(void){ADCSRA_::SetBit(6);}
+		static bool Is_Conversion_Running(void){ADCSRA_::GetBit(6);}
+		static void Auto_Trigger_Enable(void){ADCSRA_::SetBit(5);}
+		static void Interrupt_Enable(void){ADCSRA_::SetBit(3);}
+		static void Interrupt_Disable(void){ADCSRA_::ClearBit(3);}
+		
+		namespace Prescaler
+		{
+			static void Set_2(void)
+			{
+				uint8_t config_byte = ADCSRA_::Get();
+				config_byte &= ~((1<<2)|(1<<1)|(1<<0));
+				ADCSRA_::Set(config_byte);
+			}
+			
+			static void Set_4(void)
+			{
+				uint8_t config_byte = ADCSRA_::Get();
+				config_byte &= ~((1<<2)|(1<<0));
+				config_byte |= (1<<1);
+				ADCSRA_::Set(config_byte);
+			}
+			
+			static void Set_8(void)
+			{
+				uint8_t config_byte = ADCSRA_::Get();
+				config_byte &= ~(1<<2);
+				config_byte |= ((1<<1)|(1<<0));
+				ADCSRA_::Set(config_byte);
+			}
+			
+			static void Set_16(void)
+			{
+				uint8_t config_byte = ADCSRA_::Get();
+				config_byte &= ~((1<<1)|(1<<0));
+				config_byte |= (1<<2);
+				ADCSRA_::Set(config_byte);
+			}
+			
+			static void Set_32(void)
+			{
+				uint8_t config_byte = ADCSRA_::Get();
+				config_byte &= ~(1<<1);
+				config_byte |= ((1<<2)|(1<<0));
+				ADCSRA_::Set(config_byte);
+			}
+			
+			static void Set_64(void)
+			{
+				uint8_t config_byte = ADCSRA_::Get();
+				config_byte &= ~(1<<0);
+				config_byte |= ((1<<2)|(1<<1));
+				ADCSRA_::Set(config_byte);
+			}
+			
+			static void Set_128(void)
+			{
+				uint8_t config_byte = ADCSRA_::Get();
+				config_byte |= ((1<<2)|(1<<1)|(1<<0));
+				ADCSRA_::Set(config_byte);
+			}
+		}	
 		// end ADC control and status register A
 		
 		//ADC control and status register B
 		struct ADCSRB_ : public RegisterBase<0x7b> {};
+		
+		namespace Trigger_Source
+		{
+			static void Free_running(void)
+			{
+				uint8_t config_byte = ADCSRB_::Get();
+				config_byte &= ~((1<<2)|(1<<1)|(1<<0));
+				ADCSRB_::Set(config_byte);
+			}
+			
+			static void AC_(void)
+			{
+				uint8_t config_byte = ADCSRB_::Get();
+				config_byte &= ~((1<<2)|(1<<1));
+				config_byte |= (1<<0);
+				ADCSRB_::Set(config_byte);
+			}
+			
+			static void EXINT0_(void)
+			{
+				uint8_t config_byte = ADCSRB_::Get();
+				config_byte &= ~((1<<2)|(1<<0));
+				config_byte |= (1<<1);
+				ADCSRB_::Set(config_byte);
+			}
+			
+			static void TC0_Comp_Match_A(void)
+			{
+				uint8_t config_byte = ADCSRB_::Get();
+				config_byte &= ~(1<<2);
+				config_byte |= ((1<<1)|(1<<0));
+				ADCSRB_::Set(config_byte);
+			}
+			
+			static void TC0_Overflow(void)
+			{
+				uint8_t config_byte = ADCSRB_::Get();
+				config_byte &= ~((1<<1)|(1<<0));
+				config_byte |= (1<<2);
+				ADCSRB_::Set(config_byte);
+			}
+			
+			static void TC1_Comp_Match_B(void)
+			{
+				uint8_t config_byte = ADCSRB_::Get();
+				config_byte &= ~(1<<1);
+				config_byte |= ((1<<2)|(1<<0));
+				ADCSRB_::Set(config_byte);
+			}
+			
+			static void TC1_Overflow(void)
+			{
+				uint8_t config_byte = ADCSRB_::Get();
+				config_byte &= ~(1<<0);
+				config_byte |= ((1<<2)|(1<<1));
+				ADCSRB_::Set(config_byte);
+			}
+			
+			static void TC1_Capture_Event(void)
+			{
+				uint8_t config_byte = ADCSRB_::Get();
+				config_byte |= ((1<<2)|(1<<1)|(1<<0));
+				ADCSRB_::Set(config_byte);
+			}
+		}
+		
 		// end ADC control and status register B
 		
-		//ADC data register low
+		//ADC data registers
 		struct ADCL_ : public RegisterBase<0x78e> {};
-		// end ADC data register low
-		
-		//ADC data register high
 		struct ADCH_ : public RegisterBase<0x79> {};
-		// end ADC data register high
+		
+		static uint16_t Get_Value(void)
+		{
+			while(!Is_Conversion_Running());
+			uint8_t low_byte = ADCL_::Get();
+			uint8_t high_byte = ADCH_::Get();
+			uint16_t value = 0;
+			if(!is_Result_Left_Adjusted())
+			{
+				value |= (high_byte<<8)|(low_byte);
+			}
+			else {value |= (high_byte<<14)|(low_byte<<6);}
+			return value;
+		}
+		
+		// end ADC data registers
 		
 		//Digital input disable register 0
 		struct DIDR0_ : public RegisterBase<0x7e> {};
