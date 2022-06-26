@@ -193,18 +193,32 @@ void MCU::SPI_::SCK_Setup::Rate::F_div_128(void);
 ```
 #### namespace MCU::USART0_
 ```C++
-uint8_t MCU::USART0_::recieve(void);
-void MCU::USART0_::transmit(uint8_t v);
-bool MCU::USART0_::is_Recieve_Complete(void);
-bool MCU::USART0_::is_Transmit_Complete(void);
-void MCU::USART0_::Transmit_Complete(void);
-bool MCU::USART0_::is_Data_Buffer_Empty(void);
+uint8_t MCU::USART0_::RX(void);
+void MCU::USART0_::TX(uint8_t v);
+bool MCU::USART0_::is_RX_Complete(void);
+bool MCU::USART0_::is_TX_Complete(void);
+void MCU::USART0_::TX_Complete(void);
+bool MCU::USART0_::is_Data_Register_Empty(void);
 bool MCU::USART0_::is_Frame_Error(void);
 bool MCU::USART0_::is_Data_Overrun(void);
 bool MCU::USART0_::is_Parity_Error(void);
+void MCU::USART0_::RX_Complete_Interrupt_Enable(void);
+void MCU::USART0_::RX_Complete_Interrupt_Disable(void);
+void MCU::USART0_::TX_Complete_Interrupt_Enable(void);
+void MCU::USART0_::TX_Complete_Interrupt_Disable(void);
+```
+##### namespace MCU::USART0_::Set
+```C++
 void MCU::USART0_::set_BuadRate_div_16(void);
 void MCU::USART0_::set_BuadRate_div_8(void);
 void MCU::USART0_::set_Multiprocessor_Mode(void);
 void MCU::USART0_::set_noMultiprocessor_Mode(void);
-
+```
+###### namespace MCU::USART0_::Set::Character_size
+```C++
+void MCU::USART0_::Set::Character_size::5_bit(void);
+void MCU::USART0_::Set::Character_size::6_bit(void);
+void MCU::USART0_::Set::Character_size::7_bit(void);
+void MCU::USART0_::Set::Character_size::8_bit(void);
+void MCU::USART0_::Set::Character_size::9_bit(void);
 ```
