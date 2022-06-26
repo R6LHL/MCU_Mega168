@@ -704,21 +704,21 @@ namespace MCU
 		//SPI_ status register 0
 		struct SPSR0_ : public RegisterBase<0x4d> {};
 		
-		bool is_Transfer_Complete(void){return SPSR::GetBit(7);}
+		bool is_TRX_Complete(void){return SPSR::GetBit(7);}
 		bool is Data_Collision(void){return SPSR::GetBit(6);}
 		// end SPI_ status register 0
 		
 		//SPI_ data register 0
 		struct SPDR0_ : public RegisterBase<0x4e> {};
 		
-		static uint8_t read(void)
+		static uint8_t recieve(void)
 		{
-			while(!is_Transfer_Complete());
+			while(!is_TRX_Complete());
 			return SPDR0_::Get();
 		}
-		static void write(uint8_t v)
+		static void transmit(uint8_t v)
 		{
-			while(!is_Transfer_Complete());
+			while(!is_TRX_Complete());
 			SPDR0_::Set(v);
 		}
 		
@@ -736,10 +736,35 @@ namespace MCU
 	{
 		//USART0 data register
 		struct UDR0_ : public RegisterBase<0xc6> {};
+		
+		static uint8_t recieve(void)
+		{
+			while (!is_Recieve_Complete());
+			return UDR0_::Get();
+		}
+		
+		static void transmit(uint8_t value)
+		{
+			while (!is_Data_Buffer_Empty());
+			UDR0_::Set(value);
+		}
+				
 		//end USART0 data register
 		
 		//USART control and status register 0A
 		struct UCSR0A_ : public RegisterBase<0xc0> {};
+		
+		static bool is_Recieve_Complete(void){return UCSR0A_::GetBit(7);}
+		static bool is_Transmit_Complete(void){return UCSR0A_::GetBit(6);}
+		static void Transmit_Complete(void){UCSR0A_::ClearBit(6);}
+		static bool is_Data_Buffer_Empty(void){return UCSR0A_::GetBit(5);}
+		static bool is_Frame_Error(void){return UCSR0A_::GetBit(4);}
+		static bool is_Data_Overrun(void){return UCSR0A_::GetBit(3);}
+		static bool is_Parity_Error(void){return UCSR0A_::GetBit(2);}
+		static void set_BuadRate_div_16(void){UCSR0A_::ClearBit(1);}
+		static void set_BuadRate_div_8(void){UCSR0A_::SetBit(1);}
+		static void set_Multiprocessor_Mode(void){UCSR0A_::SetBit(0);}
+		static void set_noMultiprocessor_Mode(void){UCSR0A_::ClearBit(0);}
 		//end USART control and status register 0A
 		
 		//USART control and status register 0B
