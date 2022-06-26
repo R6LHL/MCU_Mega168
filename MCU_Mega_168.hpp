@@ -737,15 +737,15 @@ namespace MCU
 		//USART0 data register
 		struct UDR0_ : public RegisterBase<0xc6> {};
 		
-		static uint8_t recieve(void)
+		static uint8_t RX(void)
 		{
-			while (!is_Recieve_Complete());
+			while (!is_RX_Complete());
 			return UDR0_::Get();
 		}
 		
-		static void transmit(uint8_t value)
+		static void TX(uint8_t value)
 		{
-			while (!is_Data_Buffer_Empty());
+			while (!is_Data_Register_Empty());
 			UDR0_::Set(value);
 		}
 				
@@ -754,25 +754,78 @@ namespace MCU
 		//USART control and status register 0A
 		struct UCSR0A_ : public RegisterBase<0xc0> {};
 		
-		static bool is_Recieve_Complete(void){return UCSR0A_::GetBit(7);}
-		static bool is_Transmit_Complete(void){return UCSR0A_::GetBit(6);}
-		static void Transmit_Complete(void){UCSR0A_::ClearBit(6);}
-		static bool is_Data_Buffer_Empty(void){return UCSR0A_::GetBit(5);}
+		static bool is_RX_Complete(void){return UCSR0A_::GetBit(7);}
+		static bool is_TX_Complete(void){return UCSR0A_::GetBit(6);}
+		static void TX_Complete(void){UCSR0A_::ClearBit(6);}
+		static bool is_Data_Register_Empty(void){return UCSR0A_::GetBit(5);}
 		static bool is_Frame_Error(void){return UCSR0A_::GetBit(4);}
 		static bool is_Data_Overrun(void){return UCSR0A_::GetBit(3);}
 		static bool is_Parity_Error(void){return UCSR0A_::GetBit(2);}
-		static void set_BuadRate_div_16(void){UCSR0A_::ClearBit(1);}
-		static void set_BuadRate_div_8(void){UCSR0A_::SetBit(1);}
-		static void set_Multiprocessor_Mode(void){UCSR0A_::SetBit(0);}
-		static void set_noMultiprocessor_Mode(void){UCSR0A_::ClearBit(0);}
 		//end USART control and status register 0A
 		
 		//USART control and status register 0B
 		struct UCSR0B_ : public RegisterBase<0xc1> {};
+		
+		static void RX_Complete_Interrupt_Enable(void){UCSR0B_::SetBit(7);}
+		static void RX_Complete_Interrupt_Disable(void){UCSR0B_::ClearBit(7);}
+		
+		static void TX_Complete_Interrupt_Enable(void){UCSR0B_::SetBit(6);}
+		static void TX_Complete_Interrupt_Disable(void){UCSR0B_::ClearBit(6);}
+		
+		static void Data_reg Empty_Interrupt_Enable(void){UCSR0B_::SetBit(5);}
+		static void Data_reg Empty_Interrupt_Enable(void){UCSR0B_::SetBit(5);}
+		
+		static void RX_Enable(void){UCSR0B_::SetBit(4);}
+		static void RX_Disable(void){UCSR0B_::ClearBit(4);}
+		
+		static void TX_Enable(void){UCSR0B_::SetBit(3);}
+		static void TX_Disable(void)
+		{
+			while (!is_Data_Register_Empty());
+			while (!is_TX_Complete());
+			UCSR0B_::ClearBit(3);
+		}
 		//end USART control and status register 0B
 		
 		//USART control and status register 0C
 		struct UCSR0C_ : public RegisterBase<0xc2> {};
+		
+		namespace Set
+		{
+			static void BuadRate_div_16(void){UCSR0A_::ClearBit(1);}
+			static void BuadRate_div_8(void){UCSR0A_::SetBit(1);}
+			static void Multiprocessor_Mode(void){UCSR0A_::SetBit(0);}
+			static void noMultiprocessor_Mode(void){UCSR0A_::ClearBit(0);}
+			
+			namespace Character_size
+			{
+				static void 5_bit(void)
+				{
+					
+				}
+				
+				static void 6_bit(void)
+				{
+					
+				}
+				
+				static void 7_bit(void)
+				{
+					
+				}
+				
+				static void 8_bit(void)
+				{
+					
+				}
+				
+				static void 9_bit(void)
+				{
+					
+				}
+			}
+		}
+		
 		//end USART control and status register 0C
 		
 		//USART buad rate 0 register low
