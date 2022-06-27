@@ -743,10 +743,29 @@ namespace MCU
 			return UDR0_::Get();
 		}
 		
+		static uint16_t RX_9bit(void)
+		{
+			while (!is_RX_Complete());
+			uint16_t word = UDR0_::Get;
+			uint8_t byte = UCSR0B_::GetBit(1);
+			word |= (byte<<8);
+			return word;
+		}
+		
 		static void TX(uint8_t value)
 		{
 			while (!is_Data_Register_Empty());
 			UDR0_::Set(value);
+		}
+		
+		static void TX_9bit(uint16_t value)
+		{
+			while (!is_Data_Register_Empty());
+			bool bit = value & 0b0000000100000000;
+			uint8_t byte = value & 0b0000000011111111;
+			UDR0_::Set(value);
+			if (bit==true)UCSR0B_::SetBit(0);
+			else UCSR0B_::ClearBit(0);
 		}
 				
 		//end USART0 data register
@@ -785,6 +804,8 @@ namespace MCU
 			while (!is_TX_Complete());
 			UCSR0B_::ClearBit(3);
 		}
+		
+		
 		//end USART control and status register 0B
 		
 		//USART control and status register 0C
@@ -797,31 +818,119 @@ namespace MCU
 			static void Multiprocessor_Mode(void){UCSR0A_::SetBit(0);}
 			static void noMultiprocessor_Mode(void){UCSR0A_::ClearBit(0);}
 			
+			static void Stop_1bit(void){UCSR0C_::ClearBit(3);}
+			static void Stop_2bits(void){UCSR0C_::SetBit(3);}
+			
+			static void Clock_polarity0(void){UCSR0C_::ClearBit(0);}
+			static void Clock_polarity1(void){UCSR0C_::SetBit(0);}
+			
 			namespace Character_size
 			{
 				static void 5_bit(void)
 				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte &= ~((1<<2)|(1<<1));
+					UCSR0C_::Set(config_byte);
 					
+					config_byte = UCSR0B_::Get();
+					config_byte &= ~(1<<3);
+					UCSR0B_::Set(config_byte);
 				}
 				
 				static void 6_bit(void)
 				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte &= ~(1<<2);
+					config_byte |= (1<<1);
+					UCSR0C_::Set(config_byte);
 					
+					config_byte = UCSR0B_::Get();
+					config_byte &= ~(1<<3);
+					UCSR0B_::Set(config_byte);
 				}
 				
 				static void 7_bit(void)
 				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte &= ~(1<<1);
+					config_byte |= (1<<2);
+					UCSR0C_::Set(config_byte);
 					
+					config_byte = UCSR0B_::Get();
+					config_byte &= ~(1<<3);
+					UCSR0B_::Set(config_byte);
 				}
 				
 				static void 8_bit(void)
 				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte |= (1<<2)|(1<<1);
+					UCSR0C_::Set(config_byte);
 					
+					config_byte = UCSR0B_::Get();
+					config_byte &= ~(1<<3);
+					UCSR0B_::Set(config_byte);
 				}
 				
 				static void 9_bit(void)
 				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte |= ((1<<2)|(1<<1));
+					UCSR0C_::Set(config_byte);
 					
+					config_byte = UCSR0B_::Get();
+					config_byte |= (1<<3);
+					UCSR0B_::Set(config_byte);
+				}
+			}
+			
+			namespace Mode
+			{
+				static void Asynchronous(void)
+				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte &= ~((1<<7)|(1<<6));
+					UCSR0C_::Set(config_byte);
+				}
+				
+				static void Synchronous(void)
+				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte &= ~(1<<7);
+					config_byte |= (1<<6);
+					UCSR0C_::Set(config_byte);
+				}
+				
+				static void MasterSPI(void)
+				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte |= (1<<7)|(1<<6);
+					UCSR0C_::Set(config_byte);
+				}
+			}
+			
+			namespace Parity_control
+			{
+				static void disable(void)
+				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte &= ~((1<<5)|(1<<4));
+					UCSR0C_::Set(config_byte);
+				}
+				
+				static void even(void)
+				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte &= ~(1<<4);
+					config_byte |= (1<<5);
+					UCSR0C_::Set(config_byte);
+				}
+				
+				static void odd(void)
+				{
+					uint8_t config_byte = UCSR0C_::Get();
+					config_byte |= ((1<<5)|(1<<4));
+					UCSR0C_::Set(config_byte);
 				}
 			}
 		}
