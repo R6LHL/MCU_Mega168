@@ -195,9 +195,11 @@ void MCU::SPI_::SCK_Setup::Rate::F_div_128(void);
 ```C++
 uint8_t MCU::USART0_::RX(void);
 void MCU::USART0_::TX(uint8_t v);
+uint16_t MCU::USART0_::RX_9bit(void);
 bool MCU::USART0_::is_RX_Complete(void);
 bool MCU::USART0_::is_TX_Complete(void);
 void MCU::USART0_::TX_Complete(void);
+void MCU::USART0_::TX_9bit(uint16_t value);
 bool MCU::USART0_::is_Data_Register_Empty(void);
 bool MCU::USART0_::is_Frame_Error(void);
 bool MCU::USART0_::is_Data_Overrun(void);
@@ -209,10 +211,14 @@ void MCU::USART0_::TX_Complete_Interrupt_Disable(void);
 ```
 ##### namespace MCU::USART0_::Set
 ```C++
-void MCU::USART0_::set_BuadRate_div_16(void);
-void MCU::USART0_::set_BuadRate_div_8(void);
-void MCU::USART0_::set_Multiprocessor_Mode(void);
-void MCU::USART0_::set_noMultiprocessor_Mode(void);
+void MCU::USART0_::Set::BuadRate_div_16(void);
+void MCU::USART0_::Set::BuadRate_div_8(void);
+void MCU::USART0_::Set::Multiprocessor_Mode(void);
+void MCU::USART0_::Set::noMultiprocessor_Mode(void);
+void MCU::USART0_::Set::Stop_1bit(void);
+void MCU::USART0_::Set::Stop_2bits(void);
+void MCU::USART0_::Set::Clock_polarity0(void);
+void MCU::USART0_::Set::Clock_polarity1(void);
 ```
 ###### namespace MCU::USART0_::Set::Character_size
 ```C++
@@ -221,4 +227,17 @@ void MCU::USART0_::Set::Character_size::6_bit(void);
 void MCU::USART0_::Set::Character_size::7_bit(void);
 void MCU::USART0_::Set::Character_size::8_bit(void);
 void MCU::USART0_::Set::Character_size::9_bit(void);
+```
+###### namespace MCU::USART0_::Set::Mode
+```C++
+void MCU::USART0_::Set::Mode::Asynchronous(void);
+void MCU::USART0_::Set::Mode::Synchronous(void);
+void MCU::USART0_::Set::Mode::MasterSPI(void);
+```
+
+###### namespace MCU::USART0_::Set::Parity_control
+```C++
+void MCU::USART0_::Set::Parity_control::disable(void);
+void MCU::USART0_::Set::Parity_control::even(void);
+void MCU::USART0_::Set::Parity_control::odd(void);
 ```
